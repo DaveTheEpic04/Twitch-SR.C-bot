@@ -1,0 +1,31 @@
+{
+	"STREAMERS": [
+		{
+			"TWITCH":"srdotcbot"
+		},
+		{
+			"TWITCH":"joenome_",
+			"SRC":"joenome_"
+		},
+		{
+			"TWITCH":"meta_live",
+			"SRC":"meta"
+		},
+		{
+			"TWITCH":"madastix",
+			"SRC":"astix"
+		},
+		{
+			"TWITCH":"jjen007",
+			"SRC":"jjen"
+		},
+		{
+			"TWITCH":"thebarinade",
+			"SRC":"thebarinade"
+		},
+		{
+			"TWITCH":"drsloth",
+			"SRC":"drsloth"
+		}
+	]
+}
