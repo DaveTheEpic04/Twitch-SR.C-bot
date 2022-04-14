@@ -39,10 +39,10 @@ class Tmi(SingleServerIRCBot):
 
 def message_handler(self, msg, client):
 	twitch = str(msg.target)[1:] # Finds which stream to send the message
+	for tag in msg.tags:
+		if tag['key'] == 'display-name':
+			twitch_name = tag['value']
 	if twitch == 'srdotcbot':
-		for tag in msg.tags:
-			if tag['key'] == 'display-name':
-				twitch_name = tag['value']
 		account = False
 		for stream in streamers:
 			if twitch_name.lower() == stream['TWITCH']:
@@ -72,34 +72,34 @@ def message_handler(self, msg, client):
 			return "No sr.c account set", twitch
 		elif chat_message[0] == '!help':
 			if len(chat_message) == 1:
-				return "List of commands: pb, opb, wr. Use !help {command} to find out more", twitch
+				return f"@{twitch_name} List of commands: pb, opb, wr. Use !help {command} to find out more", twitch
 			elif chat_message[1] == 'pb':
-				return "Gets the personal best of the streamer for a given category in the game they are currently playing. Usage: !pb {Category} {Variable1} {Variable2} ...", twitch
+				return f"@{twitch_name} Gets the personal best of the streamer for a given category in the game they are currently playing. Usage: !pb {Category} {Variable1} {Variable2} ...", twitch
 			elif chat_message[1] == 'opb':
-				return "Gets the personal best of the streamer for a given category in a specified game. Usage: !opb {Game abbreviation} {Category} {Variable1} {Variable2} ...", twitch
+				return f"@{twitch_name} Gets the personal best of the streamer for a given category in a specified game. Usage: !opb {Game abbreviation} {Category} {Variable1} {Variable2} ...", twitch
 			elif chat_message[1] == 'wr':
-				return "Gets the world record for a given category in the game they are currently playing. Usage: !wr {Category} {Variable1} {Variable2} ...", twitch
+				return f"@{twitch_name} Gets the world record for a given category in the game they are currently playing. Usage: !wr {Category} {Variable1} {Variable2} ...", twitch
 		elif chat_message[0] == '!pb' and len(chat_message) != 1: # Gets the personal best of the streamer in the twitch category they are on for a given sr.c category (with variables)
 			variables = []
 			for v in range(2, len(chat_message)):
 				variables.append(chat_message[v])
 			message = SrcSide.get_pb(src, twitch, chat_message[1], variables)
 			print('Sending', message)
-			return message, twitch
+			return f"@{twitch_name} {message}", twitch
 		elif chat_message[0] == '!opb' and len(chat_message) != 1: # Gets the personal best of the streamer for a given game and category (with variables)
 			variables = []
 			for v in range(3, len(chat_message)):
 				variables.append(chat_message[v])
 			message = SrcSide.get_opb(src, chat_message[1], chat_message[2], variables)
 			print('Sending', message)
-			return message, twitch
+			return f"@{twitch_name} {message}", twitch
 		elif chat_message[0] == '!wr' and len(chat_message) != 1: # Gets the world record in the twitch category they are on for a given sr.c category (with variables)
 			variables = []
 			for v in range(2, len(chat_message)):
 				variables.append(chat_message[v])
 			message = SrcSide.get_wr(twitch, chat_message[1], variables)
 			print('Sending', message)
-			return message, twitch
+			return f"@{twitch_name} {message}", twitch
 	return None, twitch
 
 def start_bot(parse_message):
