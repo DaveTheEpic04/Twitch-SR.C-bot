@@ -68,11 +68,7 @@ def get_pb(src, twitch, category, variables=[]):
 					return f"Position: {run['place']}, Game: {run['game']['data']['names']['international']}, Category: {run['category']['data']['name']}, {var_str} Time: {conv_to_time(run['run']['times']['primary_t'])}"
 
 def get_opb(src, game, category, variables=[]):
-	game = requests.get(f"{SRC_API}/games?name={game}").json()['data'][0]['abbreviation']
-	try:
-		runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game&max=200").json()['data']
-	except KeyError:
-		return None
+	runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game&max=200").json()['data']
 	for run in runs:
 		if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == 'per-game': # Gets the correct category for full-game runs only
 			vars = []
