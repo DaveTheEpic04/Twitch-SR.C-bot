@@ -72,13 +72,13 @@ def message_handler(self, msg, client):
 			return "No sr.c account set", twitch
 		elif chat_message[0] == '!help':
 			if len(chat_message) == 1:
-				return f"@{twitch_name} List of commands: pb, opb, wr. Use !help {command} to find out more", twitch
+				return f"@{twitch_name} List of commands: pb, opb, wr. Use !help {{command}} to find out more", twitch
 			elif chat_message[1] == 'pb':
-				return f"@{twitch_name} Gets the personal best of the streamer for a given category in the game they are currently playing. Usage: !pb {Category} {Variable1} {Variable2} ...", twitch
+				return f"@{twitch_name} Gets the personal best of the streamer for a given category in the game they are currently playing. Usage: !pb {{Category}} {{Variable1}} {{Variable2}} ...", twitch
 			elif chat_message[1] == 'opb':
-				return f"@{twitch_name} Gets the personal best of the streamer for a given category in a specified game. Usage: !opb {Game abbreviation} {Category} {Variable1} {Variable2} ...", twitch
+				return f"@{twitch_name} Gets the personal best of the streamer for a given category in a specified game. Usage: !opb {{Game abbreviation}} {{Category}} {{Variable1}} {{Variable2}} ...", twitch
 			elif chat_message[1] == 'wr':
-				return f"@{twitch_name} Gets the world record for a given category in the game they are currently playing. Usage: !wr {Category} {Variable1} {Variable2} ...", twitch
+				return f"@{twitch_name} Gets the world record for a given category in the game they are currently playing. Usage: !wr {{Category}} {{Variable1}} {{Variable2}} ...", twitch
 		elif chat_message[0] == '!pb' and len(chat_message) != 1: # Gets the personal best of the streamer in the twitch category they are on for a given sr.c category (with variables)
 			variables = []
 			for v in range(2, len(chat_message)):
