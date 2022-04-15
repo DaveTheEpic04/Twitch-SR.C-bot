@@ -65,8 +65,8 @@ def get_pb(src, twitch, category, scope, variables, level=""):
 					if v != None:
 						var_str = f"{var_str} {v['variable']}: {v['value']}," # Gets the variables in the correct format (may be changed for twitch)
 				level_str = ''
-					if scope == 'per-level':
-						level_str = f"Level: {run['level']['data']['name']}, "
+				if scope == 'per-level':
+					level_str = f"Level: {run['level']['data']['name']}, "
 				if vars == [] or count == k+1: # Part of the variable check
 					return f"Position: {run['place']}, Game: {run['game']['data']['names']['international']}, {level_str}Category: {run['category']['data']['name']}, {var_str} Time: {conv_to_time(run['run']['times']['primary_t'])}"
 
