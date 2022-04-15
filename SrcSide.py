@@ -124,7 +124,7 @@ def get_wr(twitch, category, scope, variables, level=""):
 							if v != None:
 								var_str = f"{var_str} {v['variable']}: {v['value']}," # Gets the variables in the correct format (may be changed for twitch)
 								var_req = f"{var_req}&var-{v['var_id']}={v['val_id']}"
-						run = requests.get(f"{SRC_API}/leaderboards/{game}/category/{cat['id']}?top=1{var_req}").json()['data']
+						run = requests.get(f"{SRC_API}/leaderboards/{game}/level/{lev['id']}/{cat['id']}?top=1{var_req}").json()['data']
 						game = requests.get(f"{SRC_API}/games/{game}").json()['data']['names']['international']
 						players = ""
 						for player in run['runs'][0]['run']['players']:
