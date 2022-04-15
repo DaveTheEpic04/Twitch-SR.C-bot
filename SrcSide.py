@@ -45,7 +45,7 @@ def get_pb(src, twitch, category, scope, variables, level=""):
 	for game in games:
 		runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game,level&max=200").json()['data']
 		for run in runs:
-			if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope and (level.lower() == run['level']['data']['name'].lower() or scope == 'per-game'): # Gets the correct category for the given scope
+			if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope and (scope == 'per-game' or level.lower() == run['level']['data']['name'].lower()): # Gets the correct category for the given scope
 				vars = []
 				for i, var in enumerate(run['category']['data']['variables']['data']): # gets the variable data for each variable
 					for j, value in enumerate(var['values']['choices'].values()):
@@ -73,7 +73,7 @@ def get_pb(src, twitch, category, scope, variables, level=""):
 def get_opb(src, game, category, scope, variables, level=""):
 	runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game,level&max=200").json()['data']
 	for run in runs:
-		if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope and (level.lower() == run['level']['data']['name'].lower() or scope == 'per-game'): # Gets the correct category for the given scope
+		if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope and (scope == 'per-game' or level.lower() == run['level']['data']['name'].lower()): # Gets the correct category for the given scope
 			vars = []
 			for i, var in enumerate(run['category']['data']['variables']['data']): # gets the variable data for each variable
 				for j, value in enumerate(var['values']['choices'].values()):
