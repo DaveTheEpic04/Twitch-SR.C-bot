@@ -83,11 +83,11 @@ def message_handler(self, msg, client):
 			elif chat_message[1] == 'wr':
 				return f"@{twitch_name} Gets the world record for a given category in the game they are currently playing. Usage: !wr {{Category}} {{Variable1}} {{Variable2}} ...", twitch
 			elif chat_message[1] == 'ilpb':
-				return f"@{twitch_name} Gets the personal best of the streamer for a given individual level category in the game they are currently playing. Usage: !pb {{Category}} {{Variable1}} {{Variable2}} ...", twitch
+				return f"@{twitch_name} Gets the personal best of the streamer for a given individual level category in the game they are currently playing. Usage: !pb {{Category}} {{Level}} {{Variable1}} {{Variable2}} ...", twitch
 			elif chat_message[1] == 'oilpb':
-				return f"@{twitch_name} Gets the personal best of the streamer for a given individual level category in a specified game. Usage: !opb {{Game abbreviation}} {{Category}} {{Variable1}} {{Variable2}} ...", twitch
+				return f"@{twitch_name} Gets the personal best of the streamer for a given individual level category in a specified game. Usage: !opb {{Game abbreviation}} {{Category}} {{Level}} {{Variable1}} {{Variable2}} ...", twitch
 			elif chat_message[1] == 'ilwr':
-				return f"@{twitch_name} Gets the world record for a given individual level category in the game they are currently playing. Usage: !wr {{Category}} {{Variable1}} {{Variable2}} ...", twitch
+				return f"@{twitch_name} Gets the world record for a given individual level category in the game they are currently playing. Usage: !wr {{Category}} {{Level}} {{Variable1}} {{Variable2}} ...", twitch
 		elif chat_message[0] == '!pb' and len(chat_message) != 1: # Gets the personal best of the streamer in the twitch category they are on for a given sr.c category (with variables)
 			variables = []
 			for v in range(2, len(chat_message)):
@@ -111,23 +111,23 @@ def message_handler(self, msg, client):
 			return f"@{twitch_name} {message}", twitch
 		elif chat_message[0] == '!ilpb' and len(chat_message) != 1: # Gets the personal best of the streamer in the twitch category they are on for a given sr.c il category (with variables)
 			variables = []
-			for v in range(2, len(chat_message)):
+			for v in range(3, len(chat_message)):
 				variables.append(chat_message[v])
-			message = SrcSide.get_pb(src, twitch, chat_message[1], "per-level", variables)
+			message = SrcSide.get_pb(src, twitch, chat_message[1], "per-level", variables, chat_message[2])
 			print('Sending', message)
 			return f"@{twitch_name} {message}", twitch
 		elif chat_message[0] == '!oilpb' and len(chat_message) != 1: # Gets the personal best of the streamer for a given game and il category (with variables)
 			variables = []
-			for v in range(3, len(chat_message)):
+			for v in range(4, len(chat_message)):
 				variables.append(chat_message[v])
-			message = SrcSide.get_opb(src, chat_message[1], chat_message[2], "per-level", variables)
+			message = SrcSide.get_opb(src, chat_message[1], chat_message[2], "per-level", variables, chat_message[3])
 			print('Sending', message)
 			return f"@{twitch_name} {message}", twitch
 		elif chat_message[0] == '!ilwr' and len(chat_message) != 1: # Gets the world record in the twitch category they are on for a given sr.c il category (with variables)
 			variables = []
-			for v in range(2, len(chat_message)):
+			for v in range{3, len(chat_message)):
 				variables.append(chat_message[v])
-			message = SrcSide.get_wr(twitch, chat_message[1], "per-level", variables)
+			message = SrcSide.get_wr(twitch, chat_message[1], "per-level", variables, chat_message[2])
 			print('Sending', message)
 			return f"@{twitch_name} {message}", twitch
 	return None, twitch
