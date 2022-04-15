@@ -125,7 +125,7 @@ def message_handler(self, msg, client):
 			return f"@{twitch_name} {message}", twitch
 		elif chat_message[0] == '!ilwr' and len(chat_message) != 1: # Gets the world record in the twitch category they are on for a given sr.c il category (with variables)
 			variables = []
-			for v in range{3, len(chat_message)):
+			for v in range(3, len(chat_message)):
 				variables.append(chat_message[v])
 			message = SrcSide.get_wr(twitch, chat_message[1], "per-level", variables, chat_message[2])
 			print('Sending', message)
