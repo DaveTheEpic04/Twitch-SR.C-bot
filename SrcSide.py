@@ -40,7 +40,7 @@ def get_games(name):
 			games.append(game['id'])
 	return games
 
-def get_pb(src, twitch, category, variables=[], scope):
+def get_pb(src, twitch, category, scope, variables=[]):
 	games = get_games(twitch) # Gets the list of games connected to the users twitch category
 	for game in games:
 		runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game&max=200").json()['data']
@@ -67,7 +67,7 @@ def get_pb(src, twitch, category, variables=[], scope):
 				if vars == [] or count == k+1: # Part of the variable check
 					return f"Position: {run['place']}, Game: {run['game']['data']['names']['international']}, Category: {run['category']['data']['name']}, {var_str} Time: {conv_to_time(run['run']['times']['primary_t'])}"
 
-def get_opb(src, game, category, variables=[], scope):
+def get_opb(src, game, category, scope, variables=[]):
 	runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game&max=200").json()['data']
 	for run in runs:
 		if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope: # Gets the correct category for the given scope
@@ -92,7 +92,7 @@ def get_opb(src, game, category, variables=[], scope):
 			if vars == [] or count == k+1: # Part of the variable check
 				return f"Position: {run['place']}, Game: {run['game']['data']['names']['international']}, Category: {run['category']['data']['name']}, {var_str} Time: {conv_to_time(run['run']['times']['primary_t'])}"
 
-def get_wr(twitch, category, variables=[], scope):
+def get_wr(twitch, category, scope, variables=[]):
 	games = get_games(twitch) # Gets the list of games connected to the users twitch category
 	for game in games:
 		cats = requests.get(f"{SRC_API}/games/{game}/categories?embed=variables&max=200").json()['data']
