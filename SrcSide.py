@@ -40,12 +40,12 @@ def get_games(name):
 			games.append(game['id'])
 	return games
 
-def get_pb(src, twitch, category, variables=[]):
+def get_pb(src, twitch, category, variables=[], scope):
 	games = get_games(twitch) # Gets the list of games connected to the users twitch category
 	for game in games:
 		runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game&max=200").json()['data']
 		for run in runs:
-			if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == 'per-game': # Gets the correct category for full-game runs only
+			if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope: # Gets the correct category for the given scope
 				vars = []
 				for i, var in enumerate(run['category']['data']['variables']['data']): # gets the variable data for each variable
 					for j, value in enumerate(var['values']['choices'].values()):
@@ -67,10 +67,10 @@ def get_pb(src, twitch, category, variables=[]):
 				if vars == [] or count == k+1: # Part of the variable check
 					return f"Position: {run['place']}, Game: {run['game']['data']['names']['international']}, Category: {run['category']['data']['name']}, {var_str} Time: {conv_to_time(run['run']['times']['primary_t'])}"
 
-def get_opb(src, game, category, variables=[]):
+def get_opb(src, game, category, variables=[], scope):
 	runs = requests.get(f"{SRC_API}/users/{src}/personal-bests?game={game}&embed=category.variables,game&max=200").json()['data']
 	for run in runs:
-		if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == 'per-game': # Gets the correct category for full-game runs only
+		if category.lower() == run['category']['data']['name'].lower() and run['category']['data']['type'] == scope: # Gets the correct category for the given scope
 			vars = []
 			for i, var in enumerate(run['category']['data']['variables']['data']): # gets the variable data for each variable
 				for j, value in enumerate(var['values']['choices'].values()):
@@ -92,12 +92,12 @@ def get_opb(src, game, category, variables=[]):
 			if vars == [] or count == k+1: # Part of the variable check
 				return f"Position: {run['place']}, Game: {run['game']['data']['names']['international']}, Category: {run['category']['data']['name']}, {var_str} Time: {conv_to_time(run['run']['times']['primary_t'])}"
 
-def get_wr(twitch, category, variables=[]):
+def get_wr(twitch, category, variables=[], scope):
 	games = get_games(twitch) # Gets the list of games connected to the users twitch category
 	for game in games:
 		cats = requests.get(f"{SRC_API}/games/{game}/categories?embed=variables&max=200").json()['data']
 		for cat in cats:
-			if cat['name'].lower() == category.lower():
+			if cat['name'].lower() == category.lower() and cat['type'] == scope:
 				vars = []
 				for i, var in enumerate(cat['variables']['data']): # gets the variable data for each variable
 					for j, value in enumerate(var['values']['choices'].values()):
