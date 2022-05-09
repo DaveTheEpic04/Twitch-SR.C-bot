@@ -55,7 +55,7 @@ def message_handler(self, msg, client):
 			twitch_name = tag['value']
 		elif tag['key'] == 'user-type':
 			mod_status = tag['value']
-	if twitch == 'srdotcbot':
+	if twitch == os.environ['BOT_NAME']:
 		account = False
 		for pos, stream in enumerate(streamers):
 			if twitch_name.lower() == stream['TWITCH']:
@@ -214,7 +214,7 @@ def message_handler(self, msg, client):
 	return None, twitch
 
 def start_bot(parse_message):
-	username = "srdotcbot"
+	username = os.environ['BOT_NAME']
 	password = os.environ['OAUTH']
 	bot = Tmi(username, password, message_handler)
 	bot.start()
